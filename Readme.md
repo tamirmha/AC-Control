@@ -52,7 +52,7 @@ evelopment environment.
 
 1. Clone this repository:
 ```bash
-   git clone <repository-url>on the BLE peripheral device.
+   git clone https://github.com/tamirmha/AC-Control.git 
 ```
 2. Open the project in your development environment.
 3. Flash the firmware to your ESP32-C3 Super Mini.
