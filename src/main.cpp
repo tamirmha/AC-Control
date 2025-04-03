@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "decode_packet.h"
+//#include "decode_packet.h"
 #include "BLEServerManager.h"
 #include "global_var.h"
 
@@ -118,9 +118,9 @@ void loop() {
         }
     }
     // Check for received IR signals
-    #if (SERIAL_PRINT == true)
-        serial_listener();
-    #endif
+//    #if (SERIAL_PRINT == true)
+//        serial_listener();
+//    #endif
     adc_loop();
 
     previousMillis = millis();
@@ -128,7 +128,7 @@ void loop() {
     {
       delay(10);
     }
-    // deepSleepManager.enterDeepSleep();
+     deepSleepManager.enterDeepSleep();
 }
 
 

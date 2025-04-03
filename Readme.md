@@ -30,8 +30,6 @@ BlePerepherial/
 │   ├── BLEServerManager/
 │   │   ├── BLEServerManager.cpp # BLE server management logic
 │   │   └── BLEServerManager.h   # BLE server management header             
-│   ├── decode_packet/
-│   │   └── decode_packet.h      # Packet decoding logic
 │   ├── deep_sleep/
 │   │   └── deep_sleep.h         # Deep sleep functionality
 │   ├── global_vars/
