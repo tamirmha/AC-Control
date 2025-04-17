@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include "decode_packet.h"
 #include "global_var.h"
 
@@ -33,13 +32,13 @@ void loop() {
         {
             if (savedState.powerState == ON) // Check if the Dumber command is ON
             {
-                Serial.println("Dumnber is On");
+                Serial.println("Dumper is On");
                 irRemote.turn_on();
 
             }
             else
             {
-                Serial.println("Dumnber is Off");
+                Serial.println("Dumper is Off");
                 irRemote.turn_off();
             }
         }

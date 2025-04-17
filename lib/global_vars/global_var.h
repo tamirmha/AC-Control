@@ -42,7 +42,12 @@ float getVoltage() {
 #define WAKEUP_TIME_SECONDS 1
 ESP32C3DeepSleep deepSleepManager(WAKEUP_TIME_SECONDS);
 
-
+// Main .cpp functions
+/**
+ * @brief Get the index of the MAC address in the allowedMACs array.
+ * @param macAddress The MAC address to search for.
+ * @return The index of the MAC address in the allowedMACs array, or -1 if not found.
+ */
 int getMACIndex(const String& macAddress)
     {
 
@@ -53,7 +58,10 @@ int getMACIndex(const String& macAddress)
         }
         return -1; // Return -1 if not found
     }
-    
+/** 
+ * @brief Get the BLE MAC address and check if it is in the allowed list.
+ * @return void
+ */
 void get_ble_mac()
 {
     // Get BLE MAC Address
@@ -79,7 +87,10 @@ void get_ble_mac()
 
     savedState.id = index;
 }
-
+/** 
+ * @brief print the current state to the Serial monitor and check if the voltage is less than 3.3V.
+ * @return void
+ */
 void adc_loop()
 {
     savedState.voltage = getVoltage();
