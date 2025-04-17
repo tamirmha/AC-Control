@@ -78,9 +78,8 @@ public:
                 IrReceiver.resume(); // Do it here, to preserve raw data for printing with printIRResultRawFormatted()
                 Serial.println();
             }
-        } else {
+        } else 
             Serial.println("Error: Receiver not enabled");
-        }
     }
 
 
