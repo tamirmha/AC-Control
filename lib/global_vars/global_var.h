@@ -15,14 +15,18 @@ const char* allowedMACs[] = {
         "9C:9E:6E:C1:0C:5E",  // AC
         "9C:9E:6E:C1:09:E2",
         "64:E8:33:8C:04:A6",
-        "64:E8:33:8A:7C:BE"
+        "64:E8:33:8A:7C:BE",
+        "DC:06:75:E9:6F:92",
+        "DC:06:75:E9:3C:02"
 };
 
 const char* BLE_SERVER_NAMES[] = {
         "AC",
         "PARENTS_ROOM_DUMPER",  
         "WORKING_ROOM_DUMPER",
-        "SAFE_ROOM_DUMPER"
+        "SAFE_ROOM_DUMPER",
+        "Test1",
+        "Test2"
 };
 
 // IR Remote Control
@@ -109,11 +113,11 @@ void adc_loop()
    Serial.println(savedState.temperature);  
 
 //    if voltage is less than 3.3V, then deep sleep
-   if(savedState.voltage < 3.3)
+   if(savedState.voltage < 3.3 )
    {
        Serial.println("Voltage is less than 3.3V, entering deep sleep...");
        delay(100); // Ensure message is sent before sleeping
-       deepSleepManager.enterDeepSleep();
+//       deepSleepManager.enterDeepSleep();
    }
 }
 
