@@ -3,7 +3,15 @@
 
 
 #include <Arduino.h>
-#include <IRremote.hpp>
+#include <IRremoteESP8266.h>
+#include <ir_Airwell.h>
+#include <IRrecv.h>
+#include <IRsend.h>
+#include <IRutils.h>
+
+// #include <IRremote.hpp>
+
+
 
 /**
  * @brief Class to handle IR remote control functionality.
@@ -14,6 +22,7 @@
  */
 class IRRemoteControl {
 public:
+
     /**
      * @brief Enumeration for the mode of operation.
      */
@@ -38,14 +47,22 @@ public:
      */
     void begin() {
         if (mode == RECEIVER_ONLY || mode == BOTH) {
-            IrReceiver.begin(receiverPin, ENABLE_LED_FEEDBACK);
+            
+            // IrReceiver.begin(receiverPin, ENABLE_LED_FEEDBACK);
+            IrReceiver = new IRrecv(receiverPin);
+            IrReceiver->enableIRIn();
             Serial.println("IR Receiver Ready");
         }
         if (mode == TRANSMITTER_ONLY || mode == BOTH) {
-            IRsend irsend(senderPin);
-            IrSender.begin(senderPin, false, 0);
-            IrSender.enableIROut(38); // 38 kHz carrier frequency
+            // IrSender.begin(senderPin, false, 0);
+            IrSender = new IRsend(senderPin);  // Set the GPIO to be used to sending the message.
+
+            IrSender->enableIROut(38); // 38 kHz carrier frequency
+            IrSender->begin();
             Serial.println("IR Transmitter Ready");
+
+            ac = new IRAirwellAc(senderPin);  // Initialize the IRAirwellAc object with the sender pin
+            ac->begin();  // Begin the Airwell AC protocol
         }
     }
 
@@ -61,11 +78,10 @@ public:
                 Serial.println("Error: Invalid signal data");
                 return;
             }
-            IrSender.sendRaw(signal, length, 38); // 38kHz carrier frequency
+            IrSender->sendRaw(signal, length, 38); // 38kHz carrier frequency
             Serial.println("IR Command Sent!");
-        } else {
+        } else 
             Serial.println("Error: Transmitter not enabled");
-        }
     }
 
     /**
@@ -73,9 +89,11 @@ public:
      */
     void checkForReceivedSignal() {
         if (mode == RECEIVER_ONLY || mode == BOTH) {
-            if (IrReceiver.decode()) {
-                IrReceiver.printIRResultRawFormatted(&Serial, true);
-                IrReceiver.resume(); // Do it here, to preserve raw data for printing with printIRResultRawFormatted()
+            decode_results results;
+            if (IrReceiver->decode(&results)) {
+                // IrReceiver.printIRResultRawFormatted(&Serial, true);
+                serialPrintUint64(results.value, HEX);
+                IrReceiver->resume(); // Do it here, to preserve raw data for printing with printIRResultRawFormatted()
                 Serial.println();
             }
         } else 
@@ -99,6 +117,8 @@ public:
         }
     }
 
+    IRAirwellAc* getAc() { return ac; }
+
     // Getter functions for predefined IR signals
     const uint16_t* getTempPlusSignal() const { return temp_plus_signal; }
     size_t getTempPlusSignalLength() const { return sizeof(temp_plus_signal) / sizeof(temp_plus_signal[0]); }
@@ -119,6 +139,9 @@ private:
     uint8_t receiverPin;
     uint8_t senderPin;
     Mode mode;
+    IRrecv* IrReceiver;
+    IRsend* IrSender;
+    IRAirwellAc* ac;  
 
     // Predefined IR signals
     const uint16_t power_off_signal[104] = {

@@ -86,13 +86,15 @@ void BLEServerManager::printDevicesState()
 {
     Serial.printf("Vent Speed: %d, ", savedState.fanSpeed);
     Serial.printf("Mode: %d, ", savedState.mode);
-    Serial.printf("State: %d, ", savedState.powerState);
+    Serial.printf("Power State: %d, ", savedState.powerState);
+    Serial.printf("Previous Power State: %d, ", savedState.prevPowerState);
     Serial.printf("Temperature: %d, ", savedState.temperature);
     Serial.printf("Voltage: %f\n", savedState.voltage);
 }
 
 void BLEServerManager::updateDeviceState(int index, const String& value) {
     Serial.printf("Updating device state: %d, %s\n", index, value.c_str());
+    savedState.prevPowerState = savedState.powerState; // Save previous state
     switch (index) {
         case 0:
             if (value == "p_auto")      savedState.fanSpeed = AUTO;

@@ -24,15 +24,16 @@ const char* BLE_SERVER_NAMES[] = {
         "AC",
         "PARENTS_ROOM_DUMPER",  
         "WORKING_ROOM_DUMPER",
-        "SAFE_ROOM_DUMPER",
         "Test1",
-        "Test2"
+        "Test2",
+        "SAFE_ROOM_DUMPER"
 };
 
 // IR Remote Control
 #define IR_RECEIVER_PIN 2
 #define IR_LED_PIN  4
 IRRemoteControl irRemote(IR_RECEIVER_PIN, IR_LED_PIN, IRRemoteControl::TRANSMITTER_ONLY);
+
 
 // Voltage Sensor
 #define ANALOG_PIN 1
@@ -98,26 +99,12 @@ void get_ble_mac()
 void adc_loop()
 {
     savedState.voltage = getVoltage();
-    
-    // Print the current state;
-   Serial.print(savedState.id);
-   Serial.print(" ");
-   Serial.print(savedState.voltage);
-   Serial.print(" ");
-   Serial.print(savedState.powerState);
-   Serial.print(" ");
-   Serial.print(savedState.mode);
-   Serial.print(" ");
-   Serial.print(savedState.fanSpeed);      
-   Serial.print(" ");
-   Serial.println(savedState.temperature);  
-
 //    if voltage is less than 3.3V, then deep sleep
    if(savedState.voltage < 3.3 )
    {
        Serial.println("Voltage is less than 3.3V, entering deep sleep...");
        delay(100); // Ensure message is sent before sleeping
-//       deepSleepManager.enterDeepSleep();
+      deepSleepManager.enterDeepSleep();
    }
 }
 

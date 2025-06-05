@@ -39,6 +39,7 @@ struct DeviceState {
     int id=-1;
     float voltage=0.0;
     State powerState=OFF;
+    State prevPowerState=OFF;
     Mode mode=COOL;
     VentSpeed fanSpeed=AUTO;
     int temperature=0;
