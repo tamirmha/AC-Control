@@ -1,10 +1,10 @@
 #include "decode_packet.h"
 #include "global_var.h"
 
-#define SERIAL_PRINT true
+#define SERIAL_PRINT false
 
 unsigned long previousMillis = 0; // Store the last time the loop ran
-const long interval = 1000; // Interval at which to run the loop (1000 milliseconds)
+const long interval = 2000; // Interval at which to run the loop (3000 milliseconds)
 
 
 void setup() {
@@ -16,7 +16,6 @@ void setup() {
     #endif
     get_ble_mac();
     bleManager.begin(BLE_SERVER_NAMES[savedState.id]);
-    // savedState.id = 0 ;
     irRemote.begin();            // Initialize IR Remote Control 
 
     // Initialize ADC
@@ -72,5 +71,5 @@ void loop() {
         #endif
             adc_loop();
     }
-    // deepSleepManager.enterDeepSleep();
+    deepSleepManager.enterDeepSleep();
 }
