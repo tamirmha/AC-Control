@@ -12,9 +12,9 @@ RTC_DATA_ATTR DeviceState savedState;
 BLEServerManager bleManager;
 
 const char* allowedMACs[] = {
-        "9C:9E:6E:C1:0C:5E",  // AC
+        "64:E8:33:8C:04:A6",  // AC
         "9C:9E:6E:C1:09:E2",
-        "64:E8:33:8C:04:A6",
+        "9C:9E:6E:C1:0C:5E",
         "64:E8:33:8A:7C:BE",
         "DC:06:75:E9:6F:92",
         "DC:06:75:E9:3C:02"
@@ -44,7 +44,7 @@ float getVoltage() {
 }
 
 // Deep Sleep Manager
-#define WAKEUP_TIME_SECONDS 1
+#define WAKEUP_TIME_SECONDS 5
 ESP32C3DeepSleep deepSleepManager(WAKEUP_TIME_SECONDS);
 
 // Main .cpp functions
